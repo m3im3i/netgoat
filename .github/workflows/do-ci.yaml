@@ -55,7 +55,7 @@ jobs:
       self-hosted: false
       runner-labels: '[{"label": "ubuntu-latest"}]'
       language: 'csharp'
-      image-name: ${{ github.repository }}/<dotnet-goat # for ghcr.io reg, set this var to ${{ github.repository }}/<image-name>
+      image-name: ${{ github.repository }}/dotnet-goat # for ghcr.io reg, set this var to ${{ github.repository }}/<image-name>
       environment-name: 'default'
     secrets:        
       reg_name: 'ghcr.io'
