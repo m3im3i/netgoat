@@ -47,7 +47,7 @@ jobs:
       language: 'csharp'
   call-build:
     # intentionally not to deploy is working on personal repo
-    if: ${{ github.repository_owner != 'm3im3i' github.event_name == 'push' }}
+    if: ${{ !contains(github.repository, 'm3im3i') && github.event_name == 'push' }}
     needs: [call-codeql, call-unittest]
     uses: pcs-security/actions-template/.github/workflows/build-template.yaml@main
     with:
@@ -62,7 +62,7 @@ jobs:
       reg_password: ${{ secrets.PASSWORD }} 
   call-deploy: 
     # intentionally not to deploy is working on personal repo
-    if: ${{ github.repository_owner != 'm3im3i' github.event_name == 'push' }}
+    if: ${{ !contains(github.repository, 'm3im3i') && github.event_name == 'push' }}
     needs: [call-build]
     uses: pcs-security/actions-template/.github/workflows/deploy-template.yaml@main
     with:
