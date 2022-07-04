@@ -47,19 +47,20 @@ jobs:
       language: 'csharp'
   call-build:
     # intentionally not to deploy is working on personal repo
-    if: ${{ !contains(github.repository, 'm3im3i') && github.event_name == 'push' }}
+    #if: ${{ !contains(github.repository, 'm3im3i') && github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' }}
     needs: [call-codeql, call-unittest]
     uses: pcs-security/actions-template/.github/workflows/build-template.yaml@main
     with:
       self-hosted: false
       runner-labels: '[{"label": "ubuntu-latest"}]'
       language: 'csharp'
-      image-name: dotnet-goat # for ghcr.io reg, set this var to ${{ github.repository }}/<image-name>
-      environment-name: 'AZURE_ENV'
+      image-name: ${{ github.repository }}/<dotnet-goat # for ghcr.io reg, set this var to ${{ github.repository }}/<image-name>
+      environment-name: 'default'
     secrets:        
-      reg_name: ${{ secrets.REGISTRY }}  
-      reg_username: ${{ secrets.USERNAME }}      
-      reg_password: ${{ secrets.PASSWORD }} 
+      reg_name: 'ghcr.io'
+      reg_username: ${{ github.actor }}   
+      reg_password: ${{ secrets.GITHUB_TOKEN }} 
   call-deploy: 
     # intentionally not to deploy is working on personal repo
     if: ${{ !contains(github.repository, 'm3im3i') && github.event_name == 'push' }}
